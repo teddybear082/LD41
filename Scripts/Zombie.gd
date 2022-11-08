@@ -49,11 +49,11 @@ func _process(delta):
 					if $LineOfSight.is_colliding():
 						if $LineOfSight.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
 				
-							look_at(player.global_transform.origin, Vector3.UP)
+							look_at(player.get_node("FPController").global_transform.origin, Vector3.UP)
 			
 							rotation.x = 0
-							vector.x = player.global_transform.origin.x - global_transform.origin.x
-							vector.z = player.global_transform.origin.z - global_transform.origin.z
+							vector.x = player.get_node("FPController").global_transform.origin.x - global_transform.origin.x
+							vector.z = player.get_node("FPController").global_transform.origin.z - global_transform.origin.z
 						else:
 							vector.x = 0
 							vector.z = 0
@@ -64,9 +64,10 @@ func _process(delta):
 			
 				if $AttackRange.is_colliding():
 					if $AttackRange.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
-						$AttackRange.get_collider().rpc("attacked", delta)
+						$AttackRange.get_collider().get_parent().get_parent().get_parent().rpc("attacked", delta)
 			
 				rset_unreliable("puppet_transform", transform)
+				
 		if health <= 0:
 			if dead == false:
 				rpc("dead")

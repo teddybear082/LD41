@@ -32,9 +32,9 @@ func _process(delta):
 		$Area/CollisionShape.disabled = true
 
 func _on_Area_body_entered(body):
-	if body.is_in_group("Player"):
-		body.pack += 1
-		body.update_HUD()
+	if body.get_parent().get_parent().get_parent().is_in_group("Player"):
+		body.get_parent().get_parent().get_parent().pack += 1
+		body.get_parent().get_parent().get_parent().update_HUD()
 		picked = true
 		rset("puppet_picked", picked)
 		rpc("sound")

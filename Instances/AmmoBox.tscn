@@ -16,9 +16,7 @@ extents = Vector3( 1.18, 1.18, 1 )
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0 )
 script = ExtResource( 3 )
 
-[node name="Area" type="Area" parent="." groups=[
-"pistolAmmo",
-]]
+[node name="Area" type="Area" parent="." groups=["pistolAmmo"]]
 input_ray_pickable = false
 angular_damp = 1.0
 
@@ -36,4 +34,5 @@ stream = ExtResource( 4 )
 unit_db = 5.0
 
 [node name="Tween" type="Tween" parent="."]
+
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]

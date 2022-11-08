@@ -30,9 +30,9 @@ func _process(delta):
 		$Area/CollisionShape.disabled = true
 
 func _on_Area_body_entered(body):
-	if body.is_in_group("Player"):
-		if body.health < 100:
-			body.heal()
+	if body.get_parent().get_parent().get_parent().is_in_group("Player"):
+		if body.get_parent().get_parent().get_parent().health < 100:
+			body.get_parent().get_parent().get_parent().heal()
 			picked = true
 			rset("puppet_picked", picked)
 
