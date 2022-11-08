@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Instances/Player-VR.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://addons/godot-xr-tools/assets/player_body.tscn" type="PackedScene" id=10]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_direct.tscn" type="PackedScene" id=11]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_turn.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Instances/Lamp.tscn" type="PackedScene" id=13]
 [ext_resource path="res://addons/godot-xr-tools/functions/movement_physical_jump.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Assets/Audio/Player_Damage_1.wav" type="AudioStream" id=15]
 [ext_resource path="res://Assets/Audio/Player_Damage_2.wav" type="AudioStream" id=16]
@@ -43,8 +44,7 @@ pixel_size = 0.001
 text = "100"
 font = ExtResource( 4 )
 
-[node name="Lamp" parent="FPController/ARVRCamera" index="2"]
-transform = Transform( -0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 0, 0.322357, -0.351897 )
+[node name="Lamp" parent="FPController/ARVRCamera" index="2" instance=ExtResource( 13 )]
 
 [node name="RemoteTransform" type="RemoteTransform" parent="FPController/LeftHandController" index="0"]
 update_scale = false
@@ -102,7 +102,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.269085, 1.67835, -0.478668 )
 
 [node name="RayCast" type="RayCast" parent="Handgun"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73512, -1.33876 )
-enabled = true
 cast_to = Vector3( 0, 0, -150 )
 
 [node name="PlayerSounds" type="Spatial" parent="."]

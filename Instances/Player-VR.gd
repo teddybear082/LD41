@@ -3,6 +3,7 @@ extends Spatial
 export (XRTools.Buttons) var quit_button : int = XRTools.Buttons.VR_BUTTON_BY
 export (XRTools.Buttons) var reload_button : int = XRTools.Buttons.VR_BUTTON_AX
 export (XRTools.Buttons) var shoot_button : int = XRTools.Buttons.VR_TRIGGER
+export (XRTools.Buttons) var flashlight_button : int = XRTools.Buttons.VR_GRIP
 
 onready var XR_origin = $FPController
 onready var XR_camera = XR_origin.get_node("ARVRCamera")
@@ -52,6 +53,9 @@ func _ready():
 		HUD.visible = true
 		#$Camera/RayCast.enabled = true
 		#$Camera/Lamp.visible = false
+		GunRaycast.enabled = true
+		Camera_lamp.visible = false
+		
 	else:
 		HUD.visible = false
 
@@ -70,7 +74,7 @@ func _physics_process(delta):
 			XR_origin.global_transform = Network.spawn.global_transform
 			yield(get_tree().create_timer(.01), "timeout")
 
-			health_float = 100
+			health_float = 100.0
 			update_HUD()
 		
 		rset_unreliable("puppet_transform", transform)
@@ -138,14 +142,14 @@ remotesync func impact(position):
 	get_tree().get_root().get_node("Game").add_child(impact_instance)
 
 func heal():
-	health_float += 50
-	if health_float > 100:
-		health_float = 100
+	health_float += 50.0
+	if health_float > 100.0:
+		health_float = 100.0
 	health = int(health_float)
 	update_HUD()
 
 remotesync func attacked(delta):
-	health_float -= 30 * delta
+	health_float -= 30.0 * delta
 	update_HUD()
 	randomize()
 	var number = rand_range(0,2)
@@ -211,34 +215,36 @@ func _on_ShootLightTimer_timeout():
 	rpc("shootlight", false)
 
 func vr_check_shoot():
-	if can_shoot and Handgun.get_node("AnimationPlayer").current_animation != "reload":
-		if ammo > 0:
-			ammo -= 1
-			update_HUD()
-			randomize()
-			var pitch = rand_range(0.9, 1.1)
-			rpc("shoot", pitch)
-			
-			can_shoot = false
-			Shoottimer.start()
-			
-			rpc("animation", "fire")
-			if GunRaycast.is_colliding():
-				if GunRaycast.get_collider().is_in_group("Zombie"):
-					GunRaycast.get_collider().rpc("shot")
-				else:
-					if not GunRaycast.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
-						rpc("impact", GunRaycast.get_collision_point())
-		else:
-			rpc("empty_sound")
+	if is_network_master():
+		if can_shoot and Handgun.get_node("AnimationPlayer").current_animation != "reload":
+			if ammo > 0:
+				ammo -= 1
+				update_HUD()
+				randomize()
+				var pitch = rand_range(0.9, 1.1)
+				rpc("shoot", pitch)
+				
+				can_shoot = false
+				Shoottimer.start()
+				
+				rpc("animation", "fire")
+				if GunRaycast.is_colliding():
+					if GunRaycast.get_collider().is_in_group("Zombie"):
+						GunRaycast.get_collider().rpc("shot")
+					else:
+						if not GunRaycast.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
+							rpc("impact", GunRaycast.get_collision_point())
+			else:
+				rpc("empty_sound")
 
 func vr_check_reload():
-	if ammo != 12:
-		if pack > 0:
-			rpc("reload")
-			ammo = 12
-			pack -= 1
-			update_HUD()
+	if is_network_master():
+		if ammo != 12:
+			if pack > 0:
+				rpc("reload")
+				ammo = 12
+				pack -= 1
+				update_HUD()
 	
 func _on_LeftHand_button_pressed(button):
 	if button == quit_button:
@@ -249,6 +255,9 @@ func _on_LeftHand_button_pressed(button):
 			vr_check_shoot()
 		if button == reload_button:
 			vr_check_reload()
+		if button == flashlight_button and is_network_master():
+			Flashlight.visible = !Flashlight.visible
+			rpc("toggle_light", Flashlight.visible)
 
 func _on_RightHand_button_pressed(button):
 	if button == quit_button:
@@ -259,7 +268,9 @@ func _on_RightHand_button_pressed(button):
 			vr_check_shoot()
 		if button == reload_button:
 			vr_check_reload()	
-
+		if button == flashlight_button and is_network_master():
+			$Camera/Handgun/Flashlight.visible = !$Camera/Handgun/Flashlight.visible
+			rpc("toggle_light", $Camera/Handgun/Flashlight.visible)
 		
 func update_handgun_hand():
 	if left_handed == true:
