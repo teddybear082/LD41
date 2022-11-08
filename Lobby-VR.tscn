@@ -21,7 +21,7 @@ splash_screen = ExtResource( 6 )
 enable_press_to_continue = true
 
 [node name="FPController" parent="." instance=ExtResource( 3 )]
-world_scale = 1.5
+world_scale = 1.8
 
 [node name="ARVRCamera" parent="FPController" index="1"]
 far = 1000.0

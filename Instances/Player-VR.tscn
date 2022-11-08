@@ -22,7 +22,7 @@
 script = ExtResource( 1 )
 
 [node name="FPController" parent="." instance=ExtResource( 2 )]
-world_scale = 1.5
+world_scale = 1.8
 
 [node name="ARVRCamera" parent="FPController" index="1"]
 far = 1000.0
@@ -61,6 +61,7 @@ update_scale = false
 [node name="MovementTurn" parent="FPController/RightHandController" index="1" instance=ExtResource( 12 )]
 
 [node name="PlayerBody" parent="FPController" instance=ExtResource( 10 )]
+collision_layer = 526336
 
 [node name="MovementPhysicalJump" parent="FPController" instance=ExtResource( 14 )]
 

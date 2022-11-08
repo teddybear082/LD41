@@ -269,8 +269,8 @@ func _on_RightHand_button_pressed(button):
 		if button == reload_button:
 			vr_check_reload()	
 		if button == flashlight_button and is_network_master():
-			$Camera/Handgun/Flashlight.visible = !$Camera/Handgun/Flashlight.visible
-			rpc("toggle_light", $Camera/Handgun/Flashlight.visible)
+			Flashlight.visible = !Flashlight.visible
+			rpc("toggle_light", Flashlight.visible)
 		
 func update_handgun_hand():
 	if left_handed == true:

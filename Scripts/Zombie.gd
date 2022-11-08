@@ -45,7 +45,6 @@ func _process(delta):
 				var player = get_tree().get_nodes_in_group("Player")[0]
 				if player:
 					$LineOfSight.look_at(player.get_node("FPController").global_transform.origin, Vector3.UP)
-					
 					if $LineOfSight.is_colliding():
 						if $LineOfSight.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
 				

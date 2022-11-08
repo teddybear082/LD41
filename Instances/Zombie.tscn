@@ -22,9 +22,7 @@ roughness = 0.0
 material = SubResource( 3 )
 size = Vector2( 0.2, 0.2 )
 
-[node name="Zombie" type="KinematicBody" groups=[
-"Zombie",
-]]
+[node name="Zombie" type="KinematicBody" groups=["Zombie"]]
 script = ExtResource( 1 )
 
 [node name="ZombieModel" parent="." instance=ExtResource( 2 )]
@@ -53,11 +51,13 @@ one_shot = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.64515, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, -40 )
+collision_mask = 2049
 
 [node name="AttackRange" type="RayCast" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24085, 0 )
 enabled = true
 cast_to = Vector3( 0, 0, -1.7 )
+collision_mask = 2049
 
 [node name="Mouth" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5355, -0.338126 )
@@ -83,5 +83,6 @@ stream = ExtResource( 5 )
 unit_db = -25.0
 unit_size = 50.0
 max_db = -3.0
+
 [connection signal="timeout" from="DeadTimer" to="." method="_on_DeadTimer_timeout"]
 [connection signal="timeout" from="GrowlTimer" to="." method="_on_GrowlTimer_timeout"]
