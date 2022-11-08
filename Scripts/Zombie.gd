@@ -44,10 +44,10 @@ func _process(delta):
 			if get_tree().get_nodes_in_group("Player"):
 				var player = get_tree().get_nodes_in_group("Player")[0]
 				if player:
-					$LineOfSight.look_at(player.global_transform.origin, Vector3.UP)
+					$LineOfSight.look_at(player.get_node("FPController").global_transform.origin, Vector3.UP)
 					
 					if $LineOfSight.is_colliding():
-						if $LineOfSight.get_collider().is_in_group("Player"):
+						if $LineOfSight.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
 				
 							look_at(player.global_transform.origin, Vector3.UP)
 			
@@ -63,7 +63,7 @@ func _process(delta):
 				move_and_slide(vector)
 			
 				if $AttackRange.is_colliding():
-					if $AttackRange.get_collider().is_in_group("Player"):
+					if $AttackRange.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
 						$AttackRange.get_collider().rpc("attacked", delta)
 			
 				rset_unreliable("puppet_transform", transform)

@@ -87,9 +87,6 @@ tracks/4/keys = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.954795, 0.954795 )
@@ -97,7 +94,6 @@ texture = ExtResource( 4 )
 centered = false
 
 [node name="Back" type="ColorRect" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -142,7 +138,6 @@ __meta__ = {
 }
 
 [node name="Menu" type="VBoxContainer" parent="."]
-visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -205,8 +200,8 @@ margin_left = 96.0
 margin_top = 42.0
 margin_right = 643.0
 margin_bottom = 614.0
-custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 0.4 )
+custom_fonts/font = SubResource( 3 )
 text = "## Credits ##
 
 Linko - 3D Modelling and Level design
@@ -230,19 +225,18 @@ margin_left = 1219.0
 margin_top = 42.0
 margin_right = 1898.0
 margin_bottom = 614.0
-custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 1, 1, 1, 0.4 )
+custom_fonts/font = SubResource( 3 )
 text = "## Help ##
 Try to survive and find the escape of the maze !
 
 ## Commands ##
-W, A, S, D / Z, Q, S, D- Move the character
-Left mouse button - Shoot
-R - Reload
-Esc - Go to main menu/Exit the game"
-__meta__ = {
-"_edit_use_anchors_": false
-}
+Left Joystick- Move the character
+Right Joystick - Turn the character
+Trigger - Shoot
+A/X - Reload
+B/Y - Go to main menu/Exit the game
+Swing arms up or jump in real life to jump"
 
 [node name="Logo1" type="Sprite" parent="."]
 position = Vector2( 300, -124.132 )
@@ -268,6 +262,7 @@ anims/background = SubResource( 4 )
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
 autostart = true
+
 [connection signal="pressed" from="Menu/HostButton" to="." method="_on_HostButton_pressed"]
 [connection signal="text_entered" from="Menu/IP" to="." method="_on_IP_text_entered"]
 [connection signal="pressed" from="Menu/JoinButton" to="." method="_on_JoinButton_pressed"]

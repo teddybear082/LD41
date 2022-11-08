@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Scripts/screen_holder.gd" type="Script" id=1]
+[ext_resource path="res://Lobby-VR.gd" type="Script" id=2]
+[ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=3]
+[ext_resource path="res://lobbyviewport2Dto3D.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/godot-xr-tools/staging/loading_screen.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Assets/splash.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Audio/opengameart/littlerobotsoundfactory/Electric Sound Library/Mp3/UI_Synth/UI_Synth_02.mp3" type="AudioStream" id=7]
+[ext_resource path="res://addons/godot-xr-tools/functions/function_pointer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://addons/godot-xr-tools/misc/vr_common_shader_cache.tscn" type="PackedScene" id=9]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+
+[node name="Lobby" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="LoadingScreen" parent="." instance=ExtResource( 5 )]
+splash_screen = ExtResource( 6 )
+enable_press_to_continue = true
+
+[node name="FPController" parent="." instance=ExtResource( 3 )]
+world_scale = 1.5
+
+[node name="ARVRCamera" parent="FPController" index="1"]
+far = 1000.0
+
+[node name="VRCommonShaderCache" parent="FPController/ARVRCamera" index="0" instance=ExtResource( 9 )]
+
+[node name="FunctionPointer" parent="FPController/LeftHandController" index="0" instance=ExtResource( 8 )]
+enabled = false
+laser_length = 1
+
+[node name="FunctionPointer" parent="FPController/RightHandController" index="0" instance=ExtResource( 8 )]
+laser_length = 1
+
+[node name="screenholder" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3 )
+visible = false
+script = ExtResource( 1 )
+vrCamera_path = NodePath("../FPController/ARVRCamera")
+time_to_move = 0.2
+
+[node name="lobbyviewport2Dto3D" parent="screenholder" instance=ExtResource( 4 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+
+[node name="SoundEffects" type="Node" parent="."]
+
+[node name="MenuSelect" type="AudioStreamPlayer" parent="SoundEffects"]
+stream = ExtResource( 7 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[connection signal="continue_pressed" from="LoadingScreen" to="." method="_on_LoadingScreen_continue_pressed"]
+
+[editable path="FPController"]

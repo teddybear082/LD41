@@ -1,7 +1,7 @@
 extends Node
 
 var map = "res://Main.tscn"
-var player = "res://Instances/Player.tscn"
+var player = "res://Instances/Player-VR.tscn"
 var spawn = null
 
 var mute = false
