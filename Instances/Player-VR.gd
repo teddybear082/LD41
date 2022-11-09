@@ -7,6 +7,7 @@ export (XRTools.Buttons) var flashlight_button : int = XRTools.Buttons.VR_GRIP
 
 onready var XR_origin = $FPController
 onready var XR_camera = XR_origin.get_node("ARVRCamera")
+onready var XR_playerbody = XR_origin.get_node("PlayerBody")
 onready var Camera_lamp = XR_camera.get_node("Lamp")
 onready var HUD = XR_camera.get_node("HUD")
 onready var HUD_ammo = HUD.get_node("Ammo")
@@ -19,9 +20,10 @@ onready var Flashlight = Handgun.get_node("Flashlight")
 onready var Shootsound = Handgun.get_node("Nozzle/ShootSound")
 onready var ReloadSound = Handgun.get_node("Nozzle/ReloadSound")
 onready var EmptySound = Handgun.get_node("Nozzle/EmptySound")
-onready var Hurt1Sound = $PlayerSounds/Hurt1
-onready var Hurt2Sound = $PlayerSounds/Hurt2
-onready var FootStepSound = $PlayerSounds/FootStep
+onready var HandgunAnimPlayer = Handgun.get_node("AnimationPlayer")
+onready var Hurt1Sound = $FPController/PlayerSounds/Hurt1
+onready var Hurt2Sound = $FPController/PlayerSounds/Hurt2
+onready var FootStepSound = $FPController/PlayerSounds/FootStep
 onready var Shootlighttimer = $ShootLightTimer
 onready var Shoottimer = $Timer
 onready var GunRaycast = Handgun.get_node("RayCast")
@@ -77,8 +79,16 @@ func _physics_process(delta):
 			health_float = 100.0
 			update_HUD()
 		
-		rset_unreliable("puppet_transform", transform)
-		other_abilities()
+		if HandgunAnimPlayer.current_animation != "fire" and HandgunAnimPlayer.current_animation != "reload" and HandgunAnimPlayer.current_animation != "pull out":
+		
+			if abs(XR_playerbody.ground_control_velocity.x) > .3 or abs(XR_playerbody.ground_control_velocity.y) > .3:
+				rpc("footstep", true, 0.75, -25)
+			else:
+				rpc("footstep", false, 1.0, -20)
+		
+		
+		rset_unreliable("puppet_transform", XR_origin.transform)
+		#other_abilities()
 		
 		
 		
@@ -167,7 +177,7 @@ remotesync func hurt_sound(number, pitch):
 			Hurt2Sound.pitch_scale = pitch
 	
 remotesync func reload():
-	Handgun.get_node("AnimationPlayer").play("reload")
+	HandgunAnimPlayer.play("reload")
 	ReloadSound.play()
 
 func update_HUD():
@@ -176,7 +186,7 @@ func update_HUD():
 	HUD_ammo.set_text(str(ammo) + " / " + str(pack))
 
 remotesync func animation(anim):
-	Handgun.get_node("AnimationPlayer").play(anim)
+	HandgunAnimPlayer.play(anim)
 
 remotesync func toggle_light(status):
 	Flashlight.visible = status

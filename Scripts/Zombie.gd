@@ -42,17 +42,17 @@ func _process(delta):
 		
 		if not dead and walk_animation:
 			if get_tree().get_nodes_in_group("Player"):
-				var player = get_tree().get_nodes_in_group("Player")[0]
+				var player = get_tree().get_nodes_in_group("Player")[0].get_node("FPController/ARVRCamera")
 				if player:
-					$LineOfSight.look_at(player.get_node("FPController").global_transform.origin+Vector3.UP, Vector3.UP)
+					$LineOfSight.look_at(player.global_transform.origin, Vector3.UP)
 					if $LineOfSight.is_colliding():
 						if $LineOfSight.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
 				
-							look_at(player.get_node("FPController").global_transform.origin+Vector3(0,.5,0), Vector3.UP)
+							look_at(player.global_transform.origin, Vector3.UP)
 			
 							rotation.x = 0
-							vector.x = player.get_node("FPController").global_transform.origin.x - global_transform.origin.x
-							vector.z = player.get_node("FPController").global_transform.origin.z - global_transform.origin.z
+							vector.x = player.global_transform.origin.x - global_transform.origin.x
+							vector.z = player.global_transform.origin.z - global_transform.origin.z
 						else:
 							vector.x = 0
 							vector.z = 0

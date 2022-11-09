@@ -299,10 +299,6 @@ config/icon="res://icon.png"
 Network="*res://Network.gd"
 XRToolsUserSettings="*res://addons/godot-xr-tools/user_settings/user_settings.gd"
 
-[debug]
-
-settings/stdout/print_fps=true
-
 [display]
 
 window/size/width=1920
@@ -438,7 +434,11 @@ crouch={
  ]
 }
 
+[physics]
+
+common/physics_fps=120
+
 [rendering]
 
-gles3/shaders/shader_compilation_mode=2
-quality/filters/msaa=6
+quality/reflections/texture_array_reflections=false
+quality/subsurface_scattering/quality=0

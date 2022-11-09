@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://satara_night_no_lamps_2k.hdr" type="Texture" id=1]
 [ext_resource path="res://Levels/Labyrinth.tscn" type="PackedScene" id=2]
@@ -28,10 +28,7 @@ tonemap_mode = 3
 tonemap_white = 16.0
 auto_exposure_enabled = true
 auto_exposure_min_luma = 0.3
-ss_reflections_enabled = true
-ssao_enabled = true
 dof_blur_near_quality = 0
-glow_enabled = true
 glow_levels/7 = true
 glow_bicubic_upscale = true
 adjustment_enabled = true
@@ -46,6 +43,18 @@ dynamic_range = 4
 bias = 1.5
 normal_bias = 0.0
 propagation = 0.7
+
+[sub_resource type="OccluderShapePolygon" id=4]
+polygon_points = PoolVector2Array( 1.69868, -3.89527, 2.15577, 37.6928, -63.3491, 37.6272, -63.2438, -3.96245 )
+
+[sub_resource type="OccluderShapePolygon" id=5]
+polygon_points = PoolVector2Array( 111.042, 2.29396, 110.579, 39.827, -4.61079, 39.6756, -4.39711, -0.934221 )
+
+[sub_resource type="OccluderShapePolygon" id=6]
+polygon_points = PoolVector2Array( 58.7148, -99.9922, 58.6099, 25.1672, -56.8173, 25.6135, -55.9562, -100.831 )
+
+[sub_resource type="OccluderShapePolygon" id=7]
+polygon_points = PoolVector2Array( 37.862, -63.4573, 37.784, 46.5582, -72.7854, 47.2144, -72.8136, -65.9281 )
 
 [node name="Game" type="Node"]
 
@@ -419,3 +428,21 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5283, 16.9093, -37.2883 )
 subdiv = 0
 extents = Vector3( 53.0167, 19.2885, 70.4917 )
 data = SubResource( 3 )
+
+[node name="Occluders" type="Node" parent="."]
+
+[node name="Occluder" type="Occluder" parent="Occluders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 32.2222 )
+shape = SubResource( 4 )
+
+[node name="Occluder2" type="Occluder" parent="Occluders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0508, 0, 31.4428 )
+shape = SubResource( 5 )
+
+[node name="Occluder3" type="Occluder" parent="Occluders"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 23.6161, 0 )
+shape = SubResource( 6 )
+
+[node name="Occluder4" type="Occluder" parent="Occluders"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6.7564, 0 )
+shape = SubResource( 7 )

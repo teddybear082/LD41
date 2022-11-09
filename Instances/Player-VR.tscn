@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Instances/Player-VR.gd" type="Script" id=1]
 [ext_resource path="res://addons/godot-openxr/scenes/first_person_controller_vr.tscn" type="PackedScene" id=2]
@@ -30,6 +30,9 @@ jump_max_slope = 45.0
 jump_velocity = 6.0
 bounciness = 0.0
 bounce_threshold = 1.0
+
+[sub_resource type="OccluderShapePolygon" id=2]
+polygon_points = PoolVector2Array( 14.2311, -2.94044, 14.3068, 6.6209, -14.9409, 6.55493, -14.8631, -2.79251 )
 
 [node name="Player" type="Spatial" groups=["Player"]]
 script = ExtResource( 1 )
@@ -79,6 +82,44 @@ collision_layer = 526336
 
 [node name="MovementPhysicalJump" parent="FPController" instance=ExtResource( 14 )]
 
+[node name="PlayerSounds" type="Spatial" parent="FPController"]
+
+[node name="Hurt1" type="AudioStreamPlayer3D" parent="FPController/PlayerSounds"]
+stream = ExtResource( 15 )
+unit_db = -20.0
+unit_size = 10.0
+max_db = -4.0
+
+[node name="Hurt2" type="AudioStreamPlayer3D" parent="FPController/PlayerSounds"]
+stream = ExtResource( 16 )
+unit_db = -20.0
+unit_size = 10.0
+max_db = -4.0
+
+[node name="FootStep" type="AudioStreamPlayer3D" parent="FPController/PlayerSounds"]
+stream = ExtResource( 17 )
+unit_db = -20.0
+unit_size = 10.0
+
+[node name="Occluders" type="Spatial" parent="FPController"]
+visible = false
+
+[node name="Occluder" type="Occluder" parent="FPController/Occluders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -14 )
+shape = SubResource( 2 )
+
+[node name="Occluder2" type="Occluder" parent="FPController/Occluders"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 14 )
+shape = SubResource( 2 )
+
+[node name="Occluder3" type="Occluder" parent="FPController/Occluders"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -14.603, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="Occluder4" type="Occluder" parent="FPController/Occluders"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 13.758, 0, 0 )
+shape = SubResource( 2 )
+
 [node name="Handgun" parent="." instance=ExtResource( 6 )]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
 
@@ -118,26 +159,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.269085, 1.67835, -0.478668 )
 [node name="RayCast" type="RayCast" parent="Handgun"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73512, -1.33876 )
 cast_to = Vector3( 0, 0, -150 )
-
-[node name="PlayerSounds" type="Spatial" parent="."]
-
-[node name="Hurt1" type="AudioStreamPlayer3D" parent="PlayerSounds"]
-stream = ExtResource( 15 )
-unit_db = -20.0
-unit_size = 10.0
-max_db = -4.0
-
-[node name="Hurt2" type="AudioStreamPlayer3D" parent="PlayerSounds"]
-stream = ExtResource( 16 )
-unit_db = -20.0
-unit_size = 10.0
-max_db = -4.0
-
-[node name="FootStep" type="AudioStreamPlayer3D" parent="PlayerSounds"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3, 0 )
-stream = ExtResource( 17 )
-unit_db = -20.0
-unit_size = 10.0
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.25
