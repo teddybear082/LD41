@@ -57,7 +57,13 @@ func _ready():
 		#$Camera/Lamp.visible = false
 		GunRaycast.enabled = true
 		Camera_lamp.visible = false
-		
+		if Network.vr_left_handed == true:
+			left_handed = true
+			update_handgun_hand()
+		if Network.vr_seated_mode == true:
+			XR_playerbody.player_height_offset = .50
+		if Network.vr_smooth_turn == true:
+			XR_origin.get_node("RightHandController/MovementTurn").turn_mode = XR_origin.get_node("RightHandController/MovementTurn").TurnMode.SMOOTH
 	else:
 		HUD.visible = false
 

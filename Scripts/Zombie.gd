@@ -47,9 +47,9 @@ func _process(delta):
 					$LineOfSight.look_at(player.global_transform.origin, Vector3.UP)
 					if $LineOfSight.is_colliding():
 						if $LineOfSight.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
-				
+							$AttackRange.look_at($LineOfSight.get_collider().global_transform.origin, Vector3.UP)
 							look_at(player.global_transform.origin, Vector3.UP)
-			
+							
 							rotation.x = 0
 							vector.x = player.global_transform.origin.x - global_transform.origin.x
 							vector.z = player.global_transform.origin.z - global_transform.origin.z
@@ -60,7 +60,7 @@ func _process(delta):
 				vector = vector.normalized() * speed
 				vector.y -= 9.8 * delta
 				move_and_slide(vector)
-			
+				
 				if $AttackRange.is_colliding():
 					if $AttackRange.get_collider().get_parent().get_parent().get_parent().is_in_group("Player"):
 						$AttackRange.get_collider().get_parent().get_parent().get_parent().rpc("attacked", delta)

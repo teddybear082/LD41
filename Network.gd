@@ -3,8 +3,10 @@ extends Node
 var map = "res://Main.tscn"
 var player = "res://Instances/Player-VR.tscn"
 var spawn = null
-
 var mute = false
+var vr_left_handed = false
+var vr_smooth_turn = false
+var vr_seated_mode = false
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("mute"):

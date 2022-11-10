@@ -8,6 +8,8 @@
 [node name="Viewport2Din3D" parent="." instance=ExtResource( 1 )]
 screen_size = Vector2( 1.5, 0.558 )
 viewport_size = Vector2( 390, 145 )
+transparent = 0
+unshaded = true
 scene = ExtResource( 2 )
 update_mode = 2
 throttle_fps = 15.0

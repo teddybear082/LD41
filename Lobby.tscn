@@ -101,11 +101,8 @@ anchor_bottom = 0.5
 margin_left = -187.0
 margin_top = -129.5
 margin_right = 187.0
-margin_bottom = 129.5
+margin_bottom = 185.5
 color = Color( 0, 0, 0, 0.588235 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect3" type="ColorRect" parent="."]
 modulate = Color( 1, 1, 1, 0.4 )
@@ -116,11 +113,8 @@ anchor_bottom = 0.5
 margin_left = -882.413
 margin_top = -504.413
 margin_right = -307.413
-margin_bottom = 78.5874
+margin_bottom = 145.587
 color = Color( 0, 0, 0, 0.588235 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect4" type="ColorRect" parent="."]
 modulate = Color( 1, 1, 1, 0.4 )
@@ -131,13 +125,11 @@ anchor_bottom = 0.5
 margin_left = 249.0
 margin_top = -506.0
 margin_right = 958.0
-margin_bottom = 77.0
+margin_bottom = 144.0
 color = Color( 0, 0, 0, 0.588235 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Menu" type="VBoxContainer" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -147,9 +139,6 @@ margin_top = -102.0
 margin_right = 135.5
 margin_bottom = 102.0
 theme = SubResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="HostButton" type="Button" parent="Menu"]
 margin_right = 271.0
@@ -191,6 +180,12 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "Quit"
 
+[node name="VROptionsButton" type="Button" parent="Menu"]
+margin_top = 208.0
+margin_right = 271.0
+margin_bottom = 251.0
+text = "VR Options"
+
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 autoplay = true
@@ -215,7 +210,9 @@ Tye - Sound designer
 Typodermic Fonts - Game font
 
 Post Game Jam:
-Linko - Programmer and multiplayer"
+Linko - Programmer and multiplayer
+
+VR Conversion: Teddybear082"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -236,7 +233,12 @@ Right Joystick - Turn the character
 Trigger - Shoot
 A/X - Reload
 B/Y - Go to main menu/Exit the game
-Swing arms up or jump in real life to jump"
+Grip - Flashlight
+Swing arms up or jump in real life to jump
+
+**Options**
+Click on the VR Options Menu for Left Handed
+Mode, Smooth Turn Mode, and Seated Mode"
 
 [node name="Logo1" type="Sprite" parent="."]
 position = Vector2( 300, -124.132 )
@@ -261,10 +263,82 @@ anims/background = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 2.0
+one_shot = true
 autostart = true
+
+[node name="VROptionsMenu" type="VBoxContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -136.0
+margin_top = -102.0
+margin_right = 135.0
+margin_bottom = 149.0
+theme = SubResource( 2 )
+custom_constants/separation = 8
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VROptionsMenu"]
+margin_right = 273.0
+margin_bottom = 45.0
+
+[node name="Label" type="Label" parent="VROptionsMenu/HSplitContainer"]
+margin_top = 4.0
+margin_right = 185.0
+margin_bottom = 41.0
+text = "Seated Mode"
+
+[node name="SeatedCheckButton" type="CheckButton" parent="VROptionsMenu/HSplitContainer"]
+margin_left = 197.0
+margin_right = 273.0
+margin_bottom = 45.0
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="VROptionsMenu"]
+margin_top = 53.0
+margin_right = 273.0
+margin_bottom = 98.0
+
+[node name="Label" type="Label" parent="VROptionsMenu/HSplitContainer2"]
+margin_top = 4.0
+margin_right = 179.0
+margin_bottom = 41.0
+text = "Smooth Turn"
+
+[node name="SmoothTurnCheckButton" type="CheckButton" parent="VROptionsMenu/HSplitContainer2"]
+margin_left = 191.0
+margin_right = 273.0
+margin_bottom = 45.0
+
+[node name="HSplitContainer3" type="HSplitContainer" parent="VROptionsMenu"]
+margin_top = 106.0
+margin_right = 273.0
+margin_bottom = 151.0
+
+[node name="Label" type="Label" parent="VROptionsMenu/HSplitContainer3"]
+margin_top = 4.0
+margin_right = 167.0
+margin_bottom = 41.0
+text = "Left Handed"
+
+[node name="LeftHandedCheckButton" type="CheckButton" parent="VROptionsMenu/HSplitContainer3"]
+margin_left = 179.0
+margin_right = 273.0
+margin_bottom = 45.0
+
+[node name="VRBackButton" type="Button" parent="VROptionsMenu"]
+margin_top = 159.0
+margin_right = 273.0
+margin_bottom = 202.0
+text = "Back"
 
 [connection signal="pressed" from="Menu/HostButton" to="." method="_on_HostButton_pressed"]
 [connection signal="text_entered" from="Menu/IP" to="." method="_on_IP_text_entered"]
 [connection signal="pressed" from="Menu/JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="Menu/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="Menu/VROptionsButton" to="." method="_on_VROptionsButton_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="toggled" from="VROptionsMenu/HSplitContainer/SeatedCheckButton" to="." method="_on_SeatedCheckButton_toggled"]
+[connection signal="toggled" from="VROptionsMenu/HSplitContainer2/SmoothTurnCheckButton" to="." method="_on_SmoothTurnCheckButton_toggled"]
+[connection signal="toggled" from="VROptionsMenu/HSplitContainer3/LeftHandedCheckButton" to="." method="_on_LeftHandedCheckButton_toggled"]
+[connection signal="pressed" from="VROptionsMenu/VRBackButton" to="." method="_on_VRBackButton_pressed"]
