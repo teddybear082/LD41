@@ -94,15 +94,14 @@ func _physics_process(delta):
 		
 		
 		rset_unreliable("puppet_transform", XR_origin.transform)
-		#other_abilities()
-		
-		
+		rset_unreliable("puppet_camera_rotation", XR_camera.rotation)
+	
 		
 	else:
 		transform = puppet_transform
 		XR_origin.transform = puppet_transform
-		#XR_camera.rotation = puppet_camera_rotation
-		#$Camera.rotation = puppet_camera_rotation
+		XR_camera.rotation = puppet_camera_rotation
+		
 
 func other_abilities():
 	pass

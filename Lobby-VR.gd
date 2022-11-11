@@ -19,6 +19,11 @@ func _ready():
 	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("Menu/HostButton").connect("pressed", self, "_on_ui_button_pressed")
 	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("Menu/JoinButton").connect("pressed", self, "_on_ui_button_pressed")
 	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("Menu/Quit").connect("pressed", self, "_on_ui_button_pressed")
+	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("Menu/VROptionsButton").connect("pressed", self, "_on_ui_button_pressed")
+	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("VROptionsMenu/HSplitContainer/SeatedCheckButton").connect("pressed", self, "_on_ui_button_pressed")
+	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("VROptionsMenu/HSplitContainer2/SmoothTurnCheckButton").connect("pressed", self, "_on_ui_button_pressed")
+	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("VROptionsMenu/HSplitContainer3/LeftHandedCheckButton").connect("pressed", self, "_on_ui_button_pressed")
+	$screenholder/lobbyviewport2Dto3D.get_scene_instance().get_node("VROptionsMenu/VRBackButton").connect("pressed", self, "_on_ui_button_pressed")
 
 func _on_LoadingScreen_continue_pressed():
 	$LoadingScreen.follow_camera = false

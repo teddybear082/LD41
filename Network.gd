@@ -9,24 +9,27 @@ var vr_smooth_turn = false
 var vr_seated_mode = false
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("mute"):
-		mute = !mute
-		AudioServer.set_bus_mute(0, mute)
-
+#	if Input.is_action_just_pressed("mute"):
+#		mute = !mute
+#		AudioServer.set_bus_mute(0, mute)
+	pass
+	
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
 	get_tree().connect("network_peer_disconnected", self, "_on_network_peer_disconnected")
 
 func create_server():
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_server(4242, 2)
+	var err = peer.create_server(4242, 2)
+	print(err)
 	get_tree().set_network_peer(peer)
 
 	load_game()
 
 func join_server(ip):
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client(ip, 4242)
+	var err = peer.create_client(ip, 4242)
+	print(err)
 	get_tree().set_network_peer(peer)
 
 	load_game()
@@ -47,6 +50,8 @@ func spawn_player(id):
 
 func _on_network_peer_connected(id):
 	spawn_player(id)
-
+	print("peer connected: " + str(id))
+	
 func _on_network_peer_disconnected(id):
+	print("peer disconnected: " + str(id))
 	get_tree().get_root().find_node(str(id), true, false). queue_free()
