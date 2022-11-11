@@ -1,4 +1,28 @@
 # Way Out - Ludum Dare 41
+
+This is an example of a BASIC VR conversion made as a fork of the original LD41 project "Way Out" which was made open source.
+
+It is PCVR ONLY.
+
+If you play on an oculus device, only use the Oculus OpenXR runtime, not the SteamVR runtime, as it is a dramatic difference in FPS.
+
+VR Camera is enabled, basic motion controls where the gun shoots from your chosen hand is enabled.  However, I left the original gun / arms model and animations
+intact rather than using new "VR Hands."
+
+I am unable to test whether multiplayer works in VR since I don't have two PCVR compatible PCs.  My guess is it will not but you can try, and if you are able to test,
+feel free to submit code fixes if you get multiplayer working.
+
+Thanks very much to the original creators for open sourcing their project to make this attempt possible.
+
+VR controls are described in the main menu.
+
+This conversion uses the Godot OpenXR asset and Godot XR Tools asset found on the asset library (master version current as of November 2022) and Godot 3.5.1.
+
+
+
+# Original Description from Flat Screen Project Below
+
+
 PLAY: https://ludumdare41.github.io/LD41/
 
 ## Description
