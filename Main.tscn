@@ -1,12 +1,14 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://satara_night_no_lamps_2k.hdr" type="Texture" id=1]
 [ext_resource path="res://Levels/Labyrinth.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Labyrinth_2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Main.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Audio/Gameplay_1.ogg" type="AudioStream" id=5]
 [ext_resource path="res://Instances/MedKit.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Instances/AmmoBox.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Instances/Zombie.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Fonts/HUDfont.tres" type="DynamicFont" id=9]
 
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )
@@ -57,6 +59,7 @@ polygon_points = PoolVector2Array( 58.7148, -99.9922, 58.6099, 25.1672, -56.8173
 polygon_points = PoolVector2Array( 37.862, -63.4573, 37.784, 46.5582, -72.7854, 47.2144, -72.8136, -65.9281 )
 
 [node name="Game" type="Node"]
+script = ExtResource( 4 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
@@ -446,3 +449,15 @@ shape = SubResource( 6 )
 [node name="Occluder4" type="Occluder" parent="Occluders"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 6.7564, 0 )
 shape = SubResource( 7 )
+
+[node name="WinningLabel3D" type="Label3D" parent="."]
+transform = Transform( -0.775628, 0, -0.63119, 0, 1, 0, 0.63119, 0, -0.775628, 65.1341, 7.93966, 116.532 )
+pixel_size = 0.001
+modulate = Color( 0.741176, 0.639216, 0.0823529, 1 )
+text = "Whew! You survived and escaped!
+Congratulations!
+Press the Y or B button to exit to the main menu!"
+font = ExtResource( 9 )
+horizontal_alignment = 0
+
+[connection signal="player_won" from="Levels/Labyrinth 2" to="." method="_on_Labyrinth_2_player_won"]
